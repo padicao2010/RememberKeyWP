@@ -62,7 +62,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -87,6 +87,8 @@
     <addaction name="separator"/>
     <addaction name="actionCopy_Username"/>
     <addaction name="actionCopy_Password"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
    </widget>
    <widget class="QMenu" name="menuOneDrive">
     <property name="enabled">
@@ -168,6 +170,11 @@
   <action name="actionTest">
    <property name="text">
     <string>Test</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import KeePassX XML</string>
    </property>
   </action>
  </widget>

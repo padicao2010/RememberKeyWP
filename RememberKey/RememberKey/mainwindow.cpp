@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QClipboard>
 #include <QDesktopServices>
+#include <QDomDocument>
 
 static const QString RK_LAST_SECTION = "rk.last.section";
 static const QString RK_DATABASE_FILEPATH = "rk.main.database.filepath";
@@ -586,4 +587,79 @@ void MainWindow::on_actionDownload_triggered()
     appTimer->stop();
     onedriveDialog->doDownload(tempFile);
     onedriveDialog->show();
+}
+
+void MainWindow::import_GoThroughGroup(const QDomElement &ele, int *success, int *failed) {
+    auto nodeList = ele.childNodes();
+    for(int i = 0; i < nodeList.size(); i++) {
+        auto node = nodeList.at(i);
+        if(node.nodeName() == "group") {
+            if(node.namedItem("title").firstChild().toText().data() != "Backup" ) {
+                import_GoThroughGroup(node.toElement(), success, failed);
+            }
+        } else if(node.nodeName() == "entry") {
+            QDomNode title = node.namedItem("title");
+            QDomNode username = node.namedItem("username");
+            QDomNode password = node.namedItem("password");
+            QDomNode url = node.namedItem("url");
+            QDomNode comment = node.namedItem("comment");
+            QDomNode bindesc = node.namedItem("bindesc");
+            QDomNode bin = node.namedItem("bin");
+            KeyInfo key;
+            key.setName(title.firstChild().toText().data());
+            key.setUsername(username.firstChild().toText().data());
+            key.setPassword(password.firstChild().toText().data());
+            key.setSite(url.firstChild().toText().data());
+            QString notes;
+            QString commentStr = comment.firstChild().toText().data();
+            if(!commentStr.isEmpty()) {
+                notes.append(QString("Comment: %1\n").arg(commentStr));
+            }
+            if(!bindesc.isNull()) {
+                notes.append(QString("Filename %1\n").arg(bindesc.firstChild().toText().data()));
+                notes.append(QString("FileData: %1\n").arg(bin.firstChild().toText().data()));
+            }
+            key.setNotes(notes);
+            qDebug() << key.getName() << " " << key.getUsername() << " " << key.getPassword()<< " "
+                     << key.getSite() << " " << key.getNotes();
+            if(!database->addKeyInfo(key)) {
+                qDebug() << "Failed to add key" << database->getLastErrorMessage();
+                (*failed)++;
+            } else {
+                (*success)++;
+            }
+        }
+    }
+}
+
+void MainWindow::on_actionImport_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Import from KeePassX XML"), tr(""), tr("KeePassX XML(*.xml)"));
+    if(filename.isEmpty()) {
+        return;
+    }
+
+    QFile file(filename);
+    if(!file.open(QFile::ReadOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("Operation Error"), tr("Can't open file %1").arg(filename));
+        return;
+    }
+
+    QDomDocument dom;
+    QString         strError;
+    int             errLin = 0, errCol = 0;
+    if( !dom.setContent(&file, false, &strError, &errLin, &errCol)) {
+         QMessageBox::warning(this, tr("Xml file format error"),
+                                 tr("Error Message line %1 column %2 : %3").arg(errLin).arg(errCol).arg(strError));
+         return;
+    }
+    if(dom.isNull()) {
+        return;
+    }
+
+    QDomElement root = dom.documentElement();
+    int success = 0;
+    int failed = 0;
+    import_GoThroughGroup(root, &success, &failed);
+    QMessageBox::information(this, tr("Import Finish"), tr("Add records: %1 succeeded, %2 failed").arg(success).arg(failed));
 }

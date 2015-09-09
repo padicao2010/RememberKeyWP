@@ -20,6 +20,7 @@ public:
 
 public slots:
     void error_happened(const QString &errMsg);
+    void generate_password(int count, bool capital, bool small, bool digits);
 
 signals:
     void addInputReady(const KeyInfo &key);
@@ -27,6 +28,10 @@ signals:
 
 private slots:
     void on_saveButton_clicked();
+
+    void on_showPassButton_stateChanged(int arg1);
+
+    void on_generateButton_clicked();
 
 private:
     Ui::EditDialog *ui;

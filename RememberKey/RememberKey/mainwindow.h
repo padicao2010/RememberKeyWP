@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QUrl>
 #include <QSettings>
+#include <QDomDocument>
 #include "keydatabase.h"
 #include "createdialog.h"
 #include "editdialog.h"
@@ -57,6 +58,8 @@ private slots:
     void clipboard_timeout();
     void app_timeout();
 
+    void on_actionImport_triggered();
+
 private:
     void warnError(QWidget *parent, const QString &errMsg);
     void getSelectedKeyInfo(int row, KeyInfo *key);
@@ -80,6 +83,7 @@ private:
     void activeOnedrive();
     void deactiveOnedrive();
 
+    void import_GoThroughGroup(const QDomElement &ele, int *success, int *failed);
     QSettings getApplicationSettings();
 
     Ui::MainWindow *ui;

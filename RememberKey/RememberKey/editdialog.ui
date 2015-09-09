@@ -23,47 +23,10 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
+    <item row="6" column="2">
+     <widget class="QPushButton" name="saveButton">
       <property name="text">
-       <string>Site</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Username</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Notes</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2" colspan="2">
-     <widget class="QLineEdit" name="usernameEdit"/>
-    </item>
-    <item row="1" column="2" colspan="2">
-     <widget class="QLineEdit" name="siteEdit"/>
-    </item>
-    <item row="5" column="2" colspan="2">
-     <widget class="QPlainTextEdit" name="notesEdit"/>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Password</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Name</string>
+       <string>Save</string>
       </property>
      </widget>
     </item>
@@ -74,23 +37,6 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="2">
-     <widget class="QPushButton" name="saveButton">
-      <property name="text">
-       <string>Save</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="3">
-     <widget class="QPushButton" name="cancelButton">
-      <property name="text">
-       <string>Cancel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2" colspan="2">
-     <widget class="QLineEdit" name="nameEdit"/>
-    </item>
     <item row="4" column="0">
      <widget class="QLabel" name="label_6">
       <property name="text">
@@ -98,10 +44,78 @@
       </property>
      </widget>
     </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Password</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Notes</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Username</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Site</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QCheckBox" name="showPassButton">
+      <property name="text">
+       <string>Show</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="3">
+     <widget class="QLineEdit" name="nameEdit"/>
+    </item>
+    <item row="1" column="2" colspan="3">
+     <widget class="QLineEdit" name="siteEdit"/>
+    </item>
+    <item row="2" column="2" colspan="3">
+     <widget class="QLineEdit" name="usernameEdit"/>
+    </item>
+    <item row="5" column="2" colspan="3">
+     <widget class="QPlainTextEdit" name="notesEdit"/>
+    </item>
+    <item row="6" column="3" colspan="2">
+     <widget class="QPushButton" name="cancelButton">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
     <item row="4" column="2" colspan="2">
      <widget class="QLineEdit" name="passwordAgainEdit">
       <property name="echoMode">
        <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QPushButton" name="generateButton">
+      <property name="text">
+       <string>Generate</string>
       </property>
      </widget>
     </item>

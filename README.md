@@ -20,6 +20,14 @@ A tools to remember passwords in Windows Phone.
 桌面端客户端使用 Qt + openssl + sqlite 开发，已经初步完成，使用的是跨平台的套件，
 目前在 Win10，FreeBSD 下测试通过，可能可以编译支持 Android。
 
+已有功能：
+
+* 使用 openssl 加密数据，使用 sqlite3 存储加密数据
+* 新建，编辑，删除密码
+* 搜索显示密码
+* 生成密码
+* 导出数据到 onedrive，从 onedrive 导入数据
+
 Windows Phone 端的开发刚刚开始。
 
 ## Dependency

@@ -2,6 +2,9 @@
 #include "ui_editdialog.h"
 
 #include <QMessageBox>
+#include <QCryptographicHash>
+#include <QDateTime>
+#include "passworddialog.h"
 
 EditDialog::EditDialog(QWidget *parent) :
     QDialog(parent),
@@ -40,6 +43,32 @@ void EditDialog::error_happened(const QString &errMsg)
     QMessageBox::information(this, tr("Edit Error"), errMsg);
 }
 
+void EditDialog::generate_password(int count, bool capital, bool small, bool digits)
+{
+    qsrand(QDateTime::currentMSecsSinceEpoch());
+    int remain = count;
+    QString password;
+    while(remain > 0) {
+        QByteArray sampleArray;
+        for(int i = 0; i < 256; i++) {
+            sampleArray.append((char)(qrand() % 256));
+        }
+        QByteArray destArray = QCryptographicHash::hash(sampleArray, QCryptographicHash::Md5).toBase64();
+        for(auto iter = destArray.cbegin(); iter != destArray.cend(); iter++) {
+            char c = *iter;
+            if((capital && c >= 'A'  && c <= 'Z') ||
+                    (small && c >= 'a' && c <= 'z') ||
+                    (digits && c >= '0' && c <= '9')) {
+                password.append(c);
+                remain--;
+                if(remain == 0)  break;
+            }
+        }
+    }
+    ui->passwordEdit->setText(password);
+    ui->passwordAgainEdit->setText(password);
+}
+
 void EditDialog::on_saveButton_clicked()
 {
     currentKey.setName(ui->nameEdit->text());
@@ -68,4 +97,26 @@ void EditDialog::on_saveButton_clicked()
     } else {
         emit updateInputReady(oldKey, currentKey);
     }
+}
+
+void EditDialog::on_showPassButton_stateChanged(int state)
+{
+    if(state == Qt::Checked) {
+        ui->passwordEdit->setEchoMode(QLineEdit::Normal);
+        ui->passwordAgainEdit->setEchoMode(QLineEdit::Normal);
+    } else {
+        ui->passwordEdit->setEchoMode(QLineEdit::Password);
+        ui->passwordAgainEdit->setEchoMode(QLineEdit::Password);
+    }
+}
+
+void EditDialog::on_generateButton_clicked()
+{
+    PasswordDialog *dialog = new PasswordDialog(this);
+    dialog->setModal(true);
+    connect(dialog, &PasswordDialog::finished, [=](int state) {
+        dialog->deleteLater();
+    });
+    connect(dialog, &PasswordDialog::generatePassword, this, &EditDialog::generate_password);
+    dialog->show();
 }

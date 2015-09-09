@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql network
+QT       += core gui sql network xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     ../QtAesLib/qtaes.cpp \
     ../QtOneDriveLib/qtonedrive.cpp \
     onedrivedialog.cpp \
-    createdialog.cpp
+    createdialog.cpp \
+    passworddialog.cpp
 
 HEADERS  += mainwindow.h \
     editdialog.h \
@@ -29,12 +30,14 @@ HEADERS  += mainwindow.h \
     ../QtAesLib/qtaes.h \
     ../QtOneDriveLib/qtonedrive.h \
     onedrivedialog.h \
-    createdialog.h
+    createdialog.h \
+    passworddialog.h
 
 FORMS    += mainwindow.ui \
     editdialog.ui \
     onedrivedialog.ui \
-    createdialog.ui
+    createdialog.ui \
+    passworddialog.ui
 
 unix {
     target.path = /usr/lib
